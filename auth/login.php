@@ -7,7 +7,7 @@ include '../componants/head.php';
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header bg-dark text-white">
                     <h3 class="mb-0">Login</h3>
                 </div>
                 <div class="card-body">
@@ -25,7 +25,7 @@ include '../componants/head.php';
                             <label class="form-check-label" for="remember">Remember me</label>
                         </div>
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="submit" class="btn btn-dark">Login</button>
                         </div>
                     </form>
                     <div class="mt-3 text-center">
