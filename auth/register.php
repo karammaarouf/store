@@ -6,12 +6,32 @@ include '../componants/head.php';
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
+            <?php if(isset($_SESSION['error'])): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?php 
+                        echo $_SESSION['error'];
+                        unset($_SESSION['error']);
+                    ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+
+            <?php if(isset($_SESSION['success'])): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <?php 
+                        echo $_SESSION['success'];
+                        unset($_SESSION['success']);
+                    ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+
             <div class="card shadow">
                 <div class="card-header bg-dark text-white">
                     <h3 class="mb-0">Register</h3>
                 </div>
                 <div class="card-body">
-                    <form action="process_register.php" method="POST">
+                    <form action="../functions/process_register.php" method="POST">
                         <div class="mb-3">
                             <label for="fullname" class="form-label">Full Name</label>
                             <input type="text" class="form-control" id="fullname" name="fullname" required>

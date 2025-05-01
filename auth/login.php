@@ -11,7 +11,7 @@ include '../componants/head.php';
                     <h3 class="mb-0">Login</h3>
                 </div>
                 <div class="card-body">
-                    <form action="process_login.php" method="POST">
+                <form action="../functions/process_login.php" method="POST">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
                             <input type="email" class="form-control" id="email" name="email" required>
