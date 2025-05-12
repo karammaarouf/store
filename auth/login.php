@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../componants/head.php';
+include '../componants/messages.php';
 ?>
 
 <div class="container mt-5">

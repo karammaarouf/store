@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Set session variables
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
+            $_SESSION['role'] = $user['role'];
             $_SESSION['logged_in'] = true;
 
             // Handle remember me
@@ -32,7 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
             $_SESSION['success'] = "Welcome back, " . $user['username'] . "!";
-            header("Location: ../index.php");
+            
+            // Redirect based on user role
+            if($user['role'] === 'admin') {
+                header("Location: ../dashboard/dashboard.php");
+            } else {
+                header("Location: ../index.php");
+            }
             exit();
         } else {
             $_SESSION['error'] = "Invalid email or password";
