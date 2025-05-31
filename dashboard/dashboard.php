@@ -43,7 +43,7 @@ include '../componants/head.php';
                     </thead>
                     <tbody>
                         <?php
-                        $stmt = $conn->query("SELECT * FROM products ORDER BY created_at DESC");
+                        $stmt = $conn->query("SELECT * FROM products WHERE isDeleted = FALSE ORDER BY created_at DESC");
                         while ($product = $stmt->fetch()) {
                         ?>
                             <tr>

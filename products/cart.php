@@ -60,15 +60,21 @@ try {
                     <?php foreach ($cart_items as $item): ?>
                         <tr>
                             <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="../assets/images/products/<?php echo $item['image']; ?>" 
-                                         alt="<?php echo htmlspecialchars($item['product_name']); ?>"
-                                         style="width: 50px; height: 50px; object-fit: cover;"
-                                         class="me-3">
-                                    <div>
-                                        <h6 class="mb-0"><?php echo htmlspecialchars($item['product_name']); ?></h6>
-                                    </div>
-                                </div>
+                            <div class="d-flex align-items-center">
+                                            <?php if($item['image']): ?>
+                                                <?php if(filter_var($item['image'], FILTER_VALIDATE_URL)): ?>
+                                                    <img src="<?php echo htmlspecialchars($item['image']); ?>" 
+                                                         class="me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                                                <?php else: ?>
+                                                    <img src="../assets/images/products/<?php echo htmlspecialchars($item['image']); ?>" 
+                                                         class="me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                                                <?php endif; ?>
+                                            <?php else: ?>
+                                                <img src="../assets/images/no-image.jpg" 
+                                                     class="me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                                            <?php endif; ?>
+                                            <span><?php echo htmlspecialchars($item['product_name']); ?></span>
+                                        </div>
                             </td>
                             <td>$<?php echo number_format($item['item_price'], 2); ?></td>
                             <td>

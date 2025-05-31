@@ -12,29 +12,16 @@ if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
     
     try {
-        // Get product image before deletion
-        $stmt = $conn->prepare("SELECT image FROM products WHERE id = ?");
-        $stmt->execute([$id]);
-        $product = $stmt->fetch();
-        
-        // Delete product from database
-        $stmt = $conn->prepare("DELETE FROM products WHERE id = ?");
+        // تحديث حالة المنتج بدلاً من حذفه
+        $stmt = $conn->prepare("UPDATE products SET isDeleted = TRUE WHERE id = ?");
         $stmt->execute([$id]);
         
-        // Delete product image if exists
-        if ($product && $product['image']) {
-            $image_path = "../assets/images/products/" . $product['image'];
-            if (file_exists($image_path)) {
-                unlink($image_path);
-            }
-        }
-        
-        $_SESSION['success'] = "Product deleted successfully!";
+        $_SESSION['success'] = "تم حذف المنتج بنجاح!";
     } catch(PDOException $e) {
-        $_SESSION['error'] = "Failed to delete product: " . $e->getMessage();
+        $_SESSION['error'] = "فشل في حذف المنتج: " . $e->getMessage();
     }
 } else {
-    $_SESSION['error'] = "Invalid product ID";
+    $_SESSION['error'] = "معرف المنتج غير صالح";
 }
 
 header("Location: ../dashboard/dashboard.php");
