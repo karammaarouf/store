@@ -6,9 +6,9 @@ if(isset($_GET['id'])) {
     $id = intval($_GET['id']);
     
     try {
-        $stmt = $conn->prepare("SELECT * FROM products WHERE id = ?");
+        $stmt = $conn->prepare("CALL GetProductById(?)");
         $stmt->execute([$id]);
-        $product = $stmt->fetch();
+        $product = $stmt->fetch(PDO::FETCH_ASSOC);
         
         header('Content-Type: application/json');
         echo json_encode($product);

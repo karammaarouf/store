@@ -13,8 +13,9 @@ if (isset($_GET['id'])) {
     
     try {
         // تحديث حالة المنتج لاستعادته
-        $stmt = $conn->prepare("UPDATE products SET isDeleted = FALSE WHERE id = ?");
-        $stmt->execute([$id]);
+        $stmt = $conn->prepare("CALL RestoreProduct(:id)");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
         
         $_SESSION['success'] = "تمت استعادة المنتج بنجاح!";
     } catch(PDOException $e) {

@@ -13,8 +13,9 @@ if (isset($_GET['id'])) {
     
     try {
         // تحديث حالة المنتج بدلاً من حذفه
-        $stmt = $conn->prepare("UPDATE products SET isDeleted = TRUE WHERE id = ?");
-        $stmt->execute([$id]);
+        $stmt = $conn->prepare("CALL SoftDeleteProduct(:id)");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
         
         $_SESSION['success'] = "تم حذف المنتج بنجاح!";
     } catch(PDOException $e) {

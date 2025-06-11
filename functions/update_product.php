@@ -40,8 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         // Update product in database
-        $stmt = $conn->prepare("UPDATE products SET product_name = ?, price = ?, description = ?, image = ? WHERE id = ?");
-        $stmt->execute([$product_name, $price, $description, $image_name, $id]);
+        $stmt = $conn->prepare("CALL UpdateProduct(:id, :name, :price, :description, :image)");
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':name', $product_name);
+        $stmt->bindParam(':price', $price);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':image', $image_name);
+        $stmt->execute();
 
         $_SESSION['success'] = "Product updated successfully!";
         header("Location: ../dashboard/dashboard.php");

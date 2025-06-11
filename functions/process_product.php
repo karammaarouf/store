@@ -33,8 +33,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     try {
-        $stmt = $conn->prepare("INSERT INTO products (product_name, price, description, image) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$product_name, $price, $description, $image_name]);
+        $stmt = $conn->prepare("CALL AddProduct(:name, :price, :description, :image)");
+        $stmt->bindParam(':name', $product_name);
+        $stmt->bindParam(':price', $price);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':image', $image_name);
+        $stmt->execute();
 
         $_SESSION['success'] = "Product added successfully!";
         header("Location: ../dashboard/dashboard.php");

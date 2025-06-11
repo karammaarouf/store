@@ -152,6 +152,110 @@ END//
 
 DELIMITER ;
 
+-- Stored procedure to get a product by ID
+DELIMITER //
+
+CREATE PROCEDURE GetProductById(IN p_id INT)
+BEGIN
+    SELECT 
+        id,
+        product_name,
+        price,
+        description,
+        image,
+        created_at,
+        updated_at
+    FROM products
+    WHERE id = p_id AND isDeleted = FALSE;
+END //
+
+DELIMITER ;
+
+-- Stored procedure to get all products
+DELIMITER //
+
+CREATE PROCEDURE GetAllProducts()
+BEGIN
+    SELECT 
+        id,
+        product_name,
+        price,
+        description,
+        image,
+        created_at,
+        updated_at
+    FROM products
+    WHERE isDeleted = FALSE
+    ORDER BY created_at DESC;
+END //
+
+DELIMITER ;
+
+-- إجراء مخزن لاستعادة منتج محذوف منطقيًا
+DELIMITER //
+
+CREATE PROCEDURE RestoreProduct(
+    IN p_id INT
+)
+BEGIN
+    UPDATE products
+    SET 
+        isDeleted = FALSE,
+        updated_at = CURRENT_TIMESTAMP
+    WHERE id = p_id;
+END //
+
+DELIMITER ;
+DELIMITER //
+
+CREATE PROCEDURE AddProduct(
+    IN p_product_name VARCHAR(100),
+    IN p_price DECIMAL(10,2),
+    IN p_description TEXT,
+    IN p_image VARCHAR(255)
+)
+BEGIN
+    INSERT INTO products (product_name, price, description, image)
+    VALUES (p_product_name, p_price, p_description, p_image);
+END //
+
+DELIMITER ;
+DELIMITER //
+
+CREATE PROCEDURE UpdateProduct(
+    IN p_id INT,
+    IN p_product_name VARCHAR(100),
+    IN p_price DECIMAL(10,2),
+    IN p_description TEXT,
+    IN p_image VARCHAR(255)
+)
+BEGIN
+    UPDATE products
+    SET 
+        product_name = p_product_name,
+        price = p_price,
+        description = p_description,
+        image = p_image,
+        updated_at = CURRENT_TIMESTAMP
+    WHERE id = p_id;
+END //
+
+DELIMITER ;
+DELIMITER //
+
+CREATE PROCEDURE SoftDeleteProduct(
+    IN p_id INT
+)
+BEGIN
+    UPDATE products
+    SET 
+        isDeleted = TRUE,
+        updated_at = CURRENT_TIMESTAMP
+    WHERE id = p_id;
+END //
+
+DELIMITER ;
+
 -- إدراج بيانات المستخدمين كلمة المرور password
 INSERT INTO users (username, email, password, role, created_at) VALUES
 ('admin', 'admin@store.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', CURRENT_TIMESTAMP),
